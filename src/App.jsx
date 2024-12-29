@@ -14,6 +14,23 @@ function App() {
   } 
 
 
+  let tabContent = <p>Please select a topic.</p>
+
+  if (selectedTopic) {
+    tabContent = (
+      <div id='tab-content'>
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>
+            {EXAMPLES[selectedTopic].code}
+          </code>
+        </pre>
+      </div> 
+    );
+  }
+
+
 
   return (
     <div>
@@ -21,15 +38,17 @@ function App() {
       <main>
         <section id="core-concepts">
           <h2>Core Concepts</h2>
+
           <ul>
-            <CoreConcept 
+            {/* <CoreConcept 
             title={CORE_CONCEPTS[0].title}
             description={CORE_CONCEPTS[0].description}
             image={CORE_CONCEPTS[0].image}/>
-
+            
             <CoreConcept {...CORE_CONCEPTS[1]} />
             <CoreConcept {...CORE_CONCEPTS[2]} />
-            <CoreConcept {...CORE_CONCEPTS[3]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} /> */}
+            {CORE_CONCEPTS.map((conceptItem) => <CoreConcept key={conceptItem.title} {...conceptItem}/>)}
 
           </ul>
         </section>
@@ -37,14 +56,16 @@ function App() {
         <section id='examples'>
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={() => handleSelect('components')}>Components</TabButton>
-            <TabButton onSelect={() => handleSelect('jsx')}>JSX</TabButton>
-            <TabButton onSelect={() => handleSelect('props')}>Props</TabButton>
-            <TabButton onSelect={() => handleSelect('state')}>State</TabButton>
+            <TabButton
+             onSelect={() => handleSelect('components')} isSelected={selectedTopic === 'components'}>
+              Components
+            </TabButton>
+            <TabButton onSelect={() => handleSelect('jsx')} isSelected={selectedTopic === 'jsx'}>JSX</TabButton>
+            <TabButton onSelect={() => handleSelect('props')} isSelected={selectedTopic === 'props'}>Props</TabButton>
+            <TabButton onSelect={() => handleSelect('state')} isSelected={selectedTopic === 'state'}>State</TabButton>
 
           </menu>
-            {selectedTopic === undefined ? <p>Please select a topic.</p> : null}
-            {selectedTopic !==undefined ?           
+            {/* {selectedTopic === undefined ? <p>Please select a topic.</p> :             
             <div id='tab-content'>
             <h3>{EXAMPLES[selectedTopic].title}</h3>
             <p>{EXAMPLES[selectedTopic].description}</p>
@@ -53,8 +74,9 @@ function App() {
                 {EXAMPLES[selectedTopic].code}
               </code>
             </pre>
-          </div> 
-          : null}
+            </div> } */}
+
+            {tabContent}
 
 
         </section>
